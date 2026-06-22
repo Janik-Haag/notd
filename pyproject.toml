@@ -7,9 +7,6 @@ authors = [
   {name = "Janik Haag", email = "janik@aq0.de"},
 ]
 requires-python = ">=3.13"
-dependencies = [
-    "nixeval>=0.1.1",
-]
 [project.scripts]
 notd = "main:main"
 

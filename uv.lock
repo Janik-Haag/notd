@@ -3,44 +3,6 @@ revision = 3
 requires-python = ">=3.13"
 
 [[package]]
-name = "nixeval"
-version = "0.1.1"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/e1/57/31ce4a800a75bf6d27f4237922c39420bd26202b70343c712d48409cc539/nixeval-0.1.1.tar.gz", hash = "sha256:55115676eec15ba5e0358650397760a2d81d7c680352323a776bc327b312f0f8", size = 15104, upload-time = "2025-05-16T22:04:33.779Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/fc/06/bef874b051ca34194b47fa5eac8346d7ce81e0c2f9bea36b91d4243d95f0/nixeval-0.1.1-cp313-cp313-macosx_10_12_x86_64.whl", hash = "sha256:015856dea59b9b17005d2a9cb14c72520010b224d0afe23cfb05751de8e85ab2", size = 1790363, upload-time = "2025-05-16T22:03:07.848Z" },
-    { url = "https://files.pythonhosted.org/packages/8d/77/09112b76038491a6c74761d3322b9e97885404e769002272f379ed5db3f6/nixeval-0.1.1-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:fc194d844e03be89c2daaf5ee00763e130865d38bfc0d7b00a4028e43407a370", size = 1664440, upload-time = "2025-05-16T22:03:01.783Z" },
-    { url = "https://files.pythonhosted.org/packages/b7/29/b878c237e109666d30948e392573b88a31989882ba5ff201a5ecd13f99a5/nixeval-0.1.1-cp313-cp313-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:de3d22e25eea4d06abf2050597cee69704b88cb5ae6d7d359d0b278d5f339d27", size = 1839760, upload-time = "2025-05-16T22:00:59.735Z" },
-    { url = "https://files.pythonhosted.org/packages/8e/5e/b8a117ba0c00b7830fd5375e06113675e4a8c3a45ca396916eac6503de3a/nixeval-0.1.1-cp313-cp313-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:1757eb115910fa50036f18ae115b25060f2ad0e8d159e090a6acb5ae5c772e6f", size = 1819615, upload-time = "2025-05-16T22:01:22.881Z" },
-    { url = "https://files.pythonhosted.org/packages/fc/0a/985be11df2ad04009c1a11fc7d8f7719133c4a972b66269d3e6b9780c5ce/nixeval-0.1.1-cp313-cp313-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:bfd02c382f98b12d836bb8f0269c4a3d134686d5ab693662324507cf1bde2fb6", size = 2350066, upload-time = "2025-05-16T22:01:44.493Z" },
-    { url = "https://files.pythonhosted.org/packages/12/56/875d65c5fe802f24b7a55c65cd181da8d3b2e006b42675b8744f6a6b249b/nixeval-0.1.1-cp313-cp313-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:680dcbda0067f440a4993c1e3d31296b920ecd29ea90947fa4840290ba704e34", size = 1950672, upload-time = "2025-05-16T22:02:04.728Z" },
-    { url = "https://files.pythonhosted.org/packages/fa/21/6bf139b323b05641014e55f6872202beaec8b1205504e7919733625d5268/nixeval-0.1.1-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:43f20dab0ba0f027b85586b5be52439c82c63383cedc21b786982799496149a7", size = 1946622, upload-time = "2025-05-16T22:02:46.365Z" },
-    { url = "https://files.pythonhosted.org/packages/66/f2/5c80cd51a75e21daab22619d2bc50ba1a14088cc5457820d68d5c6125727/nixeval-0.1.1-cp313-cp313-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:b86e8dca710762faf8091e2c50147ee1ed7f77c135e667982d95d70b675f7d78", size = 1988758, upload-time = "2025-05-16T22:02:29.47Z" },
-    { url = "https://files.pythonhosted.org/packages/c0/08/ffc3c964625641a186a5b77ea13e14873c32d55bfbec1da3131c9c416f8d/nixeval-0.1.1-cp313-cp313-musllinux_1_2_aarch64.whl", hash = "sha256:f545de641954387961aaa8342a1b8ad6e36973fe86c0153865d222de6efd791c", size = 2014446, upload-time = "2025-05-16T22:03:15.408Z" },
-    { url = "https://files.pythonhosted.org/packages/77/92/bc3789a44d10040a6de42a69a54084c6b4790a643b2c8519a36c6e48d606/nixeval-0.1.1-cp313-cp313-musllinux_1_2_armv7l.whl", hash = "sha256:9a2ad2c942660bfc3f7d92cffaf604b6dead6a0d992815c2604d91309b13a847", size = 2080644, upload-time = "2025-05-16T22:03:36.248Z" },
-    { url = "https://files.pythonhosted.org/packages/39/a1/478827e6be01a0793c26827f32d85f8194ad5df973a3d269e23a0aa90dc8/nixeval-0.1.1-cp313-cp313-musllinux_1_2_i686.whl", hash = "sha256:6bcd23bbcd9fb1910e592beb0f2838459d158d16d12448ef378d2c7e67701f08", size = 2081189, upload-time = "2025-05-16T22:03:56.627Z" },
-    { url = "https://files.pythonhosted.org/packages/58/9e/ef89a8189852f04bbf182c5f8f5e3cebff1967c1c5c5a146122a9936871f/nixeval-0.1.1-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:23288a362098ac00536b4d4bae1238a6b08d419b11b838f8003be410272e943a", size = 2117897, upload-time = "2025-05-16T22:04:17.08Z" },
-    { url = "https://files.pythonhosted.org/packages/6d/fd/3953121b752acad4bd904021901b960253abc254b4bd614dd65a1bd06700/nixeval-0.1.1-cp313-cp313-win32.whl", hash = "sha256:330ff9ecf89e5008b3b95752117b4493a65ea2565262158be656a4e044a623d0", size = 1462342, upload-time = "2025-05-16T22:04:51.283Z" },
-    { url = "https://files.pythonhosted.org/packages/66/75/91ad38858c82ab5dbda7098b120109fe906d5cb98b5d9c5546fbd7d1c0fa/nixeval-0.1.1-cp313-cp313-win_amd64.whl", hash = "sha256:15eddb72e8cbdfdb73b3648d9836caae7896bd922a3c7b1c9402939a93a1bebc", size = 1598608, upload-time = "2025-05-16T22:04:40.749Z" },
-    { url = "https://files.pythonhosted.org/packages/a5/15/54a0458347a066b591bd34f3c6631d2def6d73ba3ff21a59ce35e33fa6c8/nixeval-0.1.1-cp313-cp313t-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:67c0633ce853df49a6fdced2c489930eaf8d5e83ab8432209c112f67adf42c5a", size = 1838920, upload-time = "2025-05-16T22:01:01.841Z" },
-    { url = "https://files.pythonhosted.org/packages/6c/f3/2b5fceb8f12c2fa9cbc728372c2ec671780df0d54667e104b8a71e2e9f11/nixeval-0.1.1-cp313-cp313t-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:937ec383e8009a82eb3667ae371f3db2c66e5e839d904fce975cc750e4e55165", size = 1819016, upload-time = "2025-05-16T22:01:24.515Z" },
-    { url = "https://files.pythonhosted.org/packages/61/1e/d1d43f3e5afe95e92d4afab526c399f54b76dba9e087acdae6432de3a203/nixeval-0.1.1-cp313-cp313t-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:8a8a2710177e3bc316312ca85f1fc8b3af7b94433b2d7a9e3d0a831e7f96888e", size = 2346971, upload-time = "2025-05-16T22:01:46.348Z" },
-    { url = "https://files.pythonhosted.org/packages/2e/ae/4d5d348c2bb94a0d84d928ff071bd8a670e933c375a02ac3c7d810aefb79/nixeval-0.1.1-cp313-cp313t-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:3d4854f69d1c0251c7cc5d732c61f6c940de57c9b206fa2b01d9e9cb2deccdde", size = 1951847, upload-time = "2025-05-16T22:02:06.402Z" },
-    { url = "https://files.pythonhosted.org/packages/3c/16/1a45332015c898dc9f8390297968027d4242788a648ad5f0f01107972e03/nixeval-0.1.1-cp313-cp313t-musllinux_1_2_aarch64.whl", hash = "sha256:eeaa85cc77c5781d72a10106bc14c7416dffdbd8aba56ad154046e1268ae6353", size = 2013347, upload-time = "2025-05-16T22:03:17.21Z" },
-    { url = "https://files.pythonhosted.org/packages/e0/52/c7e26e95a794df17b8edff4f1a7926eae5303d7fe66b19eeae97a811c8b0/nixeval-0.1.1-cp313-cp313t-musllinux_1_2_armv7l.whl", hash = "sha256:03b61425d3f4d3230a35088e1ba55811c049208bab53c994c6585355cfaf7849", size = 2079236, upload-time = "2025-05-16T22:03:38.152Z" },
-    { url = "https://files.pythonhosted.org/packages/3a/f3/83a93a5e3491f3143981da337c2978bcc46ec14b206c4ce3d654cad31c37/nixeval-0.1.1-cp313-cp313t-musllinux_1_2_i686.whl", hash = "sha256:07462f779b2568182247c521c938e028305b3ce286b15d29184f14e5a4c07466", size = 2081372, upload-time = "2025-05-16T22:03:58.527Z" },
-    { url = "https://files.pythonhosted.org/packages/b7/71/fb2c4cdfba20e5dd8c511634a0499178373eaa7e5d18cfad853367936ad6/nixeval-0.1.1-cp313-cp313t-musllinux_1_2_x86_64.whl", hash = "sha256:4c1f10b2e496069d04fdb3f7dce56cf310c2983cac394204cd6c664e64f93c85", size = 2117929, upload-time = "2025-05-16T22:04:18.843Z" },
-    { url = "https://files.pythonhosted.org/packages/e0/8e/36c747ffea7831eff2bc65a9e01bb7c2c900407bda8ec64f5b544bc63f3f/nixeval-0.1.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:09056102cca6adad429bdddf45a0d41decc776083afe1346e1efa86e1404e58b", size = 1946872, upload-time = "2025-05-16T22:02:48.092Z" },
-    { url = "https://files.pythonhosted.org/packages/a7/87/aba3573815abe86b93e2ddaa91f955d167363bfce5e951502f97f799f2fa/nixeval-0.1.1-cp314-cp314-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:67a49222f6dd080f16c1b21e1bff6cc5317c4e19080db0318abcfd39734f1e5a", size = 1989457, upload-time = "2025-05-16T22:02:31.211Z" },
-]
-
-[[package]]
 name = "notd"
 version = "0.1.0"
 source = { editable = "." }
-dependencies = [
-    { name = "nixeval" },
-]
-
-[package.metadata]
-requires-dist = [{ name = "nixeval", specifier = ">=0.1.1" }]

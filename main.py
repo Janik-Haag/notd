@@ -1,54 +1,90 @@
 #!/usr/bin/env python3
 from collections import defaultdict
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 import argparse
+import json
 import os
-import re
+import subprocess
 import sys
-
-import nixeval
-
-
-def discover_probably_packages(abs_nixpkgs_path: str) -> dict[str, str]:
-    def add_package(attr_name: str, file_path: str) -> None:
-        probably_packages[attr_name.strip()] = Path(abs_nixpkgs_path, file_path)
-
-    probably_packages = {}
-    with open(Path(abs_nixpkgs_path, "pkgs/top-level/all-packages.nix"), "r") as file:
-        lines = file.readlines()
-        for l in lines:
-            # TODO: this should be a ast parser (e.g. rnix)
-            # maybe recurseIntoAttrs could be used to detect packageSets e.g. python3Packages
-            capture = re.search("(\\b.*)=.*callPackage.*(\\.\\/.*?)( |{|\\))", l)
-            if not capture:
-                continue
-            add_package(capture.group(1), str(Path("pkgs/top-level/../", capture.group(2))))
-
-    abs_pkgs_by_name = Path(abs_nixpkgs_path, "pkgs/by-name/")
-    for two_letter_path in os.listdir(abs_pkgs_by_name):
-        if not os.path.isdir(Path(abs_pkgs_by_name, two_letter_path)):
-            continue
-
-        # TODO: investigate a bunch of questionable eval failures
-        # e.g. pkgs/by-name/ki/kikit/package.nix doesn't get 100% correctly identified because the pkg is written badly
-        # could probably run the regex again, if there is a callPackage recurisvley resolve and flatten all the attrs
-        for package_path in os.listdir(Path(abs_pkgs_by_name, two_letter_path)):
-            add_package(package_path, str(Path("pkgs/by-name/", two_letter_path, package_path, "package.nix")))
-
-    return probably_packages
+import tempfile
 
 
-def extract_package_fuction_attrnames(probably_packages: dict[str, str]) -> dict[str, list[str]]:
+def eval_nix(nix_expr: str):
+    with tempfile.NamedTemporaryFile(
+        mode="w",
+        suffix=".nix",
+        delete=True,
+    ) as tf:
+        tf.write(nix_expr)
+        tf.flush()
+
+        result = subprocess.check_output(
+            [
+                "nix-instantiate",
+                "--eval",
+                "--strict",
+                "--json",
+                tf.name,
+            ],
+            text=True,
+            stderr=subprocess.PIPE,
+        )
+    return json.loads(result)
+
+
+def discover_toplevel_packages(abs_nixpkgs_path: str) -> dict[str, Path]:
+    nix_eval_str = f"""
+    with import {abs_nixpkgs_path} {{ }};
+        builtins.mapAttrs (n: v:
+        let
+            try = builtins.tryEval (v.meta or "no_meta").position or "${{n}} doesn't have meta or position attr";
+        in if try.success then
+            try.value
+        else "failed to evaluate ${{n}}"
+    ) pkgs
+    """
+    eval_result: dict[str, str] = eval_nix(nix_eval_str)
+    result: dict[str, Path] = {}
+    for attr_name, file_path in eval_result.items():
+        if file_path.startswith("/nix/store/"):
+            # path looks like `/etc/nixos/nixpkgs/pkgs/by-name/aa/aaa/package.nix:21`
+            file_path_without_line_num = "".join(file_path.split(":")[:-1])
+            non_nixstored_slice = Path(file_path_without_line_num).parts[4:]
+            result[attr_name] = Path(abs_nixpkgs_path, *non_nixstored_slice)
+        else:
+            # already holds a error val, was set during eval
+            print(file_path, file=sys.stderr)
+
+    return result
+
+
+def eval_package(item):
+    attr_name, file_path = item
+
+    nix_eval_str = f"builtins.attrNames (builtins.functionArgs (import {file_path}))"
+
+    try:
+        eval_result = set(eval_nix(nix_eval_str))
+        return attr_name, eval_result
+    except subprocess.CalledProcessError:
+        print(f"couldn't eval {file_path}", file=sys.stderr)
+        return attr_name, None
+
+
+def extract_package_fuction_attrnames(probably_packages: dict[str, Path]) -> dict[str, set[str]]:
     evaled_graph = {}
-    for attr_name, file_path in probably_packages.items():
-        nix_eval_str = f"builtins.attrNames (builtins.functionArgs (import {file_path}))"
-        try:
-            eval_result = set(nixeval.loads(nix_eval_str))
-        except ValueError:
-            print(f"couldn't eval {file_path}", file=sys.stderr)
-            continue
-        evaled_graph[attr_name] = eval_result
+
+    with ProcessPoolExecutor(max_workers=os.cpu_count()) as pool:
+        futures = [pool.submit(eval_package, item) for item in probably_packages.items()]
+
+        for future in as_completed(futures):
+            attr_name, result = future.result()
+
+            if result:
+                evaled_graph[attr_name] = result
+
     return evaled_graph
 
 
@@ -78,10 +114,11 @@ def main() -> None:
     args = parser.parse_args()
 
     abs_nixpkgs_path = os.path.abspath(args.nixpkgs_path)
-    all_targets = set(nixeval.loads(args.overlay_expression))
+    all_targets = set(eval_nix(args.overlay_expression))
 
-    probably_packages = discover_probably_packages(abs_nixpkgs_path)
-    evaled_graph = extract_package_fuction_attrnames(probably_packages)
+    toplevel_packages = discover_toplevel_packages(abs_nixpkgs_path)
+    evaled_graph = extract_package_fuction_attrnames(toplevel_packages)
+
     print(traverse_package_graph(all_targets, evaled_graph))
 
 
