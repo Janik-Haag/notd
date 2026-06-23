@@ -111,6 +111,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(prog="notd", description="nix overlay target determinator")
     parser.add_argument("nixpkgs_path")
     parser.add_argument("overlay_expression")
+    parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
 
     abs_nixpkgs_path = os.path.abspath(args.nixpkgs_path)
@@ -119,7 +120,12 @@ def main() -> None:
     toplevel_packages = discover_toplevel_packages(abs_nixpkgs_path)
     evaled_graph = extract_package_fuction_attrnames(toplevel_packages)
 
-    print(traverse_package_graph(all_targets, evaled_graph))
+    targets = traverse_package_graph(all_targets, evaled_graph)
+    if args.json:
+        # hack, json can't deseralize sets...
+        print(json.dumps(targets, default=list))
+    else:
+        print(targets)
 
 
 if __name__ == "__main__":
